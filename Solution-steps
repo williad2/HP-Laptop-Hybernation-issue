@@ -1,0 +1,23 @@
+open an elevated command prompt and run the following command:
+
+powercfg /sleepstudy
+
+This will generate a sleep study report (C:\WINDOWS\system32\sleepstudy-report.html) and will allow you to confirm the hyberation event occurs at the same time you exhibit the issue.
+
+If you confirmed the hybernation event occurs at the same time, proceed to unlock the hidden power configuration settings by running the following command in the same elevated command prompt opened earlier:
+
+REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerSettings\238C9FA8-0AAD-41ED-83F4-97BE242C8F20\7bc4a2f9-d8fc-4469-b07b-33eb785aaca0 /v Attributes /t REG_DWORD /d 2 /f
+
+Next run the following command to open you power setting menu:
+
+control powercfg.cpl,,1
+
+Drill down into "Sleep", then "System unattended sleep timeout", then change these settings (battery, plugged in) from 2 Minutes to a more favorable timeout setting or zero which disables the feature.
+
+If you wish to disable hibernate as well run the following command:
+
+powercfg -hibernate off
+
+Finally we need to reboot.  Important note: run the following command to reboot your PC for the changes to take effect.  On newer PC's the powerbutton does not power cycle the device, it only triggers a hibernate or sleep function.  Even if you just disabled it (its crazy I know). 
+
+shutdown /s /f /t 0
